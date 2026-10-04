@@ -1,0 +1,6 @@
+{
+  "name": "Hero Arena",
+  "description": "2 kişilik takımlarla 10 efsanevi kahramanın otomatik savaştığı taktiksel arena oyunu.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
