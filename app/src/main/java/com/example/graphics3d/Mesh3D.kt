@@ -48,6 +48,8 @@ data class Polygon3D(
     val vertices: List<Vec3>,
     val baseColor: Color,
     val isEmissive: Boolean = false,
+    val isMetallic: Boolean = false,
+    val roughness: Float = 0.5f,
     val isWireframeOnly: Boolean = false
 ) {
     fun normal(): Vec3 {

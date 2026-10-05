@@ -13,7 +13,7 @@ config_version=5
 config/name="Hero Arena 3D"
 config/description="2 Kişilik Takımlarla 10 Kahramanın 3D Otomatik Savaştığı Taktiksel Arena Oyunu"
 run/main_scene="res://scenes/main_menu.tscn"
-config/features=PackedStringArray("4.3", "Mobile")
+config/features=PackedStringArray("4.7", "Forward Plus", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]

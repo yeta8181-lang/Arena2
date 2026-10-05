@@ -113,14 +113,19 @@ fun Hero3DCanvas(
                     continue
                 }
 
-                // Calculate Shading
-                val diffuse = if (poly.isEmissive) {
-                    1.2f
-                } else {
-                    val rawDot = normal.dot(lightDir)
-                    val clamped = max(0f, rawDot)
-                    0.45f + 0.55f * clamped
-                }
+                // Calculate PBR Realistic Shading
+                val viewDir = Vec3(0f, 0f, 1f)
+                val halfVec = (lightDir + viewDir).normalize()
+                val nDotL = max(0f, normal.dot(lightDir))
+                val nDotV = max(0f, normal.dot(viewDir))
+                val nDotH = max(0f, normal.dot(halfVec))
+
+                val ambient = 0.38f
+                val diffuse = if (poly.isEmissive) 1.25f else (ambient + 0.62f * nDotL)
+                val shininess = if (poly.isMetallic) 32f else 12f
+                val specMult = if (poly.isMetallic) 0.65f else 0.22f
+                val specular = if (poly.isEmissive) 0f else (nDotH.pow(shininess) * specMult)
+                val rim = if (poly.isEmissive) 0f else ((1f - nDotV).pow(2.8f) * 0.32f)
 
                 // Project 3D vertices to 2D screen coordinates
                 val path = Path()
@@ -145,10 +150,13 @@ fun Hero3DCanvas(
                 val shadedColor = if (poly.isEmissive) {
                     baseC
                 } else {
+                    val totalR = (baseC.red * diffuse + specular + rim * 0.8f).coerceIn(0f, 1f)
+                    val totalG = (baseC.green * diffuse + specular + rim * 0.8f).coerceIn(0f, 1f)
+                    val totalB = (baseC.blue * diffuse + specular + rim * 0.8f).coerceIn(0f, 1f)
                     Color(
-                        red = (baseC.red * diffuse).coerceIn(0f, 1f),
-                        green = (baseC.green * diffuse).coerceIn(0f, 1f),
-                        blue = (baseC.blue * diffuse).coerceIn(0f, 1f),
+                        red = totalR,
+                        green = totalG,
+                        blue = totalB,
                         alpha = baseC.alpha
                     )
                 }
@@ -156,11 +164,11 @@ fun Hero3DCanvas(
                 when (renderStyle) {
                     RenderStyle.SHADED -> {
                         drawPath(path, shadedColor, style = Fill)
-                        // Subtle facet edge for low-poly crisp definition
-                        drawPath(path, Color.Black.copy(alpha = 0.2f), style = Stroke(width = 1.2f))
+                        // Smooth soft facet outline
+                        drawPath(path, Color.Black.copy(alpha = 0.12f), style = Stroke(width = 0.9f))
                     }
                     RenderStyle.WIREFRAME -> {
-                        drawPath(path, shadedColor.copy(alpha = 0.85f), style = Stroke(width = 1.8f))
+                        drawPath(path, shadedColor.copy(alpha = 0.85f), style = Stroke(width = 1.6f))
                     }
                     RenderStyle.GLOW_CRYSTAL -> {
                         drawPath(path, shadedColor.copy(alpha = 0.35f), style = Fill)

@@ -3,7 +3,7 @@ extends Node3D
 
 enum Team { TEAM_1, TEAM_2 }
 
-signal damaged(amount: int, is_crit: Boolean, is_skill: Boolean)
+signal damaged(amount: int, is_crit: bool, is_skill: bool)
 signal healed(amount: int)
 signal died()
 signal skill_cast(skill_name: String)
@@ -19,8 +19,8 @@ var max_mana: int = 100
 var current_shield: int = 0
 
 var attack_cooldown: float = 0.0
-var is_alive: Boolean = true
-var is_stunned: Boolean = false
+var is_alive: bool = true
+var is_stunned: bool = false
 var stun_timer: float = 0.0
 var burn_timer: float = 0.0
 
@@ -60,7 +60,7 @@ func update_tick(delta: float) -> void:
 
 	attack_cooldown -= delta
 
-func take_damage(raw_amount: int, is_crit: Boolean = false, is_skill: Boolean = false, _tag: String = "") -> int:
+func take_damage(raw_amount: int, is_crit: bool = false, is_skill: bool = false, _tag: String = "") -> int:
 	if not is_alive:
 		return 0
 

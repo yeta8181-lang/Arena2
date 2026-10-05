@@ -1,6 +1,6 @@
-# Hero Arena 3D - Godot Engine 4 Projesi
+# Hero Arena 3D - Godot Engine 4.7 Projesi
 
-Bu klasör (`godot_project`), Hero Arena oyununun **Godot Engine 4** (4.0, 4.1, 4.2, 4.3+) için hazırlanmış tam, çalışmaya hazır proje kaynak kodlarını içerir.
+Bu klasör (`godot_project`), Hero Arena oyununun **Godot Engine 4.7** (ve 4.x serisi) için hazırlanmış, tüm ayrıştırma (parsing) hataları giderilmiş, çalışmaya hazır tam proje kaynak kodlarını içerir.
 
 ---
 
