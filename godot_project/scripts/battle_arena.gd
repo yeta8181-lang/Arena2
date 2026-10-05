@@ -1,5 +1,8 @@
 extends Node3D
 
+const CombatHeroScript = preload("res://scripts/combat_hero.gd")
+const BattleEngineScript = preload("res://scripts/battle_engine.gd")
+
 @onready var team1_container: Node3D = $Team1Container
 @onready var team2_container: Node3D = $Team2Container
 @onready var lbl_timer: Label = $CanvasLayer/TopBar/LblTimer
@@ -8,9 +11,9 @@ extends Node3D
 @onready var victory_panel: Panel = $CanvasLayer/VictoryPanel
 @onready var lbl_winner: Label = $CanvasLayer/VictoryPanel/VBox/LblWinner
 
-var engine: BattleEngine
-var team1_units: Array[CombatHero] = []
-var team2_units: Array[CombatHero] = []
+var engine: BattleEngine = null
+var team1_units: Array = []
+var team2_units: Array = []
 
 var speed_mult: float = 1.0
 var is_paused: bool = false
@@ -87,7 +90,8 @@ func _process(delta: float) -> void:
 
 	# Update unit rotation and death appearance
 	for u in engine.get_all_heroes():
-		if not u.is_alive and u.visible:
+		var unit_alive: bool = bool(u.get("is_alive"))
+		if not unit_alive and u.visible:
 			u.rotation_degrees.z = 90
 			u.position.y = -0.3
 

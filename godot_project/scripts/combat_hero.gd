@@ -8,7 +8,7 @@ signal healed(amount: int)
 signal died()
 signal skill_cast(skill_name: String)
 
-@export var data: HeroData
+@export var data: HeroData = null
 @export var team: Team = Team.TEAM_1
 @export var slot_index: int = 0
 
@@ -23,6 +23,12 @@ var is_alive: bool = true
 var is_stunned: bool = false
 var stun_timer: float = 0.0
 var burn_timer: float = 0.0
+
+func is_alive_unit() -> bool:
+	return is_alive
+
+func is_unit_stunned() -> bool:
+	return is_stunned
 
 var total_damage_dealt: int = 0
 var total_damage_taken: int = 0
